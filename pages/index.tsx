@@ -1,3 +1,10 @@
+import Header from "@/components/Header";
+import MainPage from "@/components/MainPage";
+
 export default function Home() {
-  return <div>MY project</div>;
+  return (
+    <>
+      <Header /> <MainPage />
+    </>
+  );
 }
