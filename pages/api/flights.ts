@@ -24,6 +24,12 @@ const getFlight = async (id: string) => {
   const collection = await getCollection(COLLECTION_NAME);
   return collection.findOne({ _id: ObjectId.createFromHexString(id) });
 };
+
+const getFlightByName = async (flightName: string) => {
+  const collection = await getCollection(COLLECTION_NAME);
+  return collection.findOne({ flightName: flightName });
+};
+
 const postFlight = async (flight: IFlight) => {
   const collection = await getCollection(COLLECTION_NAME);
   return collection.insertOne(flight);
@@ -53,6 +59,10 @@ export default async function handler(req: any, res: NextApiResponse) {
   if (req.method === "GET" && req.query.id) {
     const id = req.query.id;
     const record = await getFlight(id);
+    return sendOk(res, record);
+  } else if (req.method === "GET" && req.query.flightName) {
+    const flightName = req.query.flightName;
+    const record = await getFlightByName(flightName);
     return sendOk(res, record);
   } else if (req.method === "GET") {
     const flights = await getFlights();

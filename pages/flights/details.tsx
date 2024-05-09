@@ -1,14 +1,15 @@
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-
-import { IFlight } from "../api/flights";
-import { flightDefaultValues } from "@/utils/constants";
-import { getFlightById, updateFlight } from "@/utils/flightsFunctions";
 import FlightForm from "@/components/FlightForm";
-import Spinner from "@/components/Spinner";
+import { flightDefaultValues } from "@/utils/constants";
+import { createFlight, getFlightById } from "@/utils/flightsFunctions";
+import { useRouter } from "next/router";
+import { IFlight } from "../api/flights";
 import Header from "@/components/Header";
+import { FlightDetails } from "@/components/FlighDetails";
+import { useEffect, useState } from "react";
+import Spinner from "@/components/Spinner";
+import { ObjectId } from "mongodb";
 
-const Edit = () => {
+const Details = (flight: IFlight) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
   const [entry, setEntry] = useState(flightDefaultValues);
@@ -21,16 +22,6 @@ const Edit = () => {
     }
 
     setIsLoading(false);
-  };
-
-  const onSubmit = async (data: IFlight) => {
-    const response = await updateFlight(data);
-
-    if (response) {
-      router.push("/");
-    } else {
-      alert("Failed to update record");
-    }
   };
 
   useEffect(() => {
@@ -51,13 +42,9 @@ const Edit = () => {
   return (
     <>
       <Header />
-      {entry._id ? (
-        <FlightForm data={entry} onSubmit={onSubmit} />
-      ) : (
-        <div className="text-center">Record not found</div>
-      )}
+      <FlightDetails flight={entry} />;
     </>
   );
 };
 
-export default Edit;
+export default Details;

@@ -5,9 +5,15 @@ interface FlightCardProps {
   flight: IFlight;
   onUpdate: (arg: string) => void;
   onDelete: (arg: string) => void;
+  onClick: (arg: string) => void;
 }
 
-export const FlightCard = ({ flight, onUpdate, onDelete }: FlightCardProps) => {
+export const FlightCard = ({
+  flight,
+  onUpdate,
+  onDelete,
+  onClick,
+}: FlightCardProps) => {
   const renderButtons = () => {
     return (
       <div className="flex justify-center mt-[30px]">
@@ -30,8 +36,9 @@ export const FlightCard = ({ flight, onUpdate, onDelete }: FlightCardProps) => {
   };
   return (
     <div
-      className="p-6 max-w-sm p-6 bg-white opacity-75 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 shadow-lg rounded-lg overflow-hidden relative transform transition duration-500 hover:scale-105"
+      className="cursor-pointer p-6 max-w-sm p-6 bg-white opacity-75 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 shadow-lg rounded-lg overflow-hidden relative transform transition duration-500 hover:scale-105"
       key={flight._id?.toString() ?? ""}
+      onClick={() => onClick(flight._id?.toString() ?? "")}
     >
       <h2 className="text-3xl font-semibold text-gray mb-2">
         {flight.flightName}

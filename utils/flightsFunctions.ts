@@ -36,6 +36,24 @@ export const getFlightById = async (id: string) => {
   }
 };
 
+export const getFlightByName = async (flightName: string) => {
+  try {
+    const response = await fetch(`/api/flights?flightName=${flightName}`, {
+      method: "GET",
+    });
+
+    const data = await response.json();
+
+    if (!data?.data) {
+      return null;
+    }
+
+    return data.data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export const createFlight = async (flight: IFlight) => {
   try {
     delete flight._id;
